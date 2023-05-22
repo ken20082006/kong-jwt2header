@@ -6,4 +6,4 @@ services:
       dockerfile: Dockerfile
     command: tail -f /dev/null
     volumes:
-      - ./src:/usr/local/src
+      - ./volume:/usr/local/src
