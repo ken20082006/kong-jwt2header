@@ -1,9 +1,8 @@
 version: '3'
 services:
   my-luarocks-container:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: imolein/luarocks:5.4
     command: tail -f /dev/null
     volumes:
-      - ./volume:/usr/local/src
+      - ./plugin:/tmp/volume/plugin
+      - ./kong-jwt2header-1.0-1.rockspec:/tmp/volume/kong-jwt2header-1.0-1.rockspec

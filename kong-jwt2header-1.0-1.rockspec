@@ -1,4 +1,4 @@
-package = "kong-plugin-jwt2header"
+package = "kong-jwt2header"
 version = "1.0-1"
 
 source = {
@@ -11,7 +11,7 @@ description = {
 }
 
 dependencies = {
-  "lua ~> 5.1"
+  "lua >= 5.1, < 6.0",
 }
 
 build = {
