@@ -1,0 +1,9 @@
+version: '3'
+services:
+  my-luarocks-container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: tail -f /dev/null
+    volumes:
+      - ./src:/usr/local/src

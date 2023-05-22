@@ -1,8 +1,8 @@
-package = "kong-jwt2header"
-version = "1.0-3"
+package = "kong-plugin-jwt2header"
+version = "1.0-1"
 
 source = {
-  url = "https://github.com/yesinteractive/kong-jwt2header.git"
+  url = "https://github.com/ken20082006/kong-jwt2header.git"
 }
 
 description = {
