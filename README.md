@@ -11,6 +11,19 @@ Please note that this plugin does NOT validate JWT tokens. You will still need t
 
 ## Installation
 
+### pack the plugin
+
+With luarocks(3.9.2) and lua(>5.1)
+
+execute the below command
+
+```
+luarocks make kong-jwt2header-1.0-1.rockspec
+luarocks pack kong-jwt2header 1.0-1
+```
+
+the plugin will pack to `kong-plugin-jwt2header-1.0-1.all.rock`
+
 ### luarocks
 
 Verify Git is installed on your Kong Node then install via luarocks:
