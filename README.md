@@ -1,18 +1,9 @@
-# Kong Plugin: JWT To Header (Route by JWT Claim)
-![alt text](https://github.com/yesinteractive/kong-jwt2header/blob/master/banner-jwt2header.png "Kong Jwt2header plugin")
-
-Update: Previously this plugin only worked with Kong Enterprise but has been updated to support both Kong community and enterprise as it uses the Kong commmunity JWT libraries.
-
-This Kong Plugin can be used to route requests by JWT claim. It does this by converting JWT claims to headers during rewrite phase so 
-that Kong's route by header functionality can be used to route the request appropriately. Alternatively, the plugin can be used to 
-simply convert JWT claims to headers that can be consumed by the upstream service. 
-
-Please note that this plugin does NOT validate JWT tokens. You will still need to use the proper Kong auth plugin (JWT, OIDC, etc.) to do so. 
+# Kong Plugin: JWT To Header 
+This is a kong plugin for extract claims from JWT to the header.
 
 ## Installation
 
 ### pack the plugin
-
 With luarocks(3.9.2) and lua(>5.1)
 
 execute the below command
@@ -22,7 +13,23 @@ luarocks make kong-jwt2header-1.0-1.rockspec
 luarocks pack kong-jwt2header 1.0-1
 ```
 
-the plugin will pack to `kong-plugin-jwt2header-1.0-1.all.rock`
+#### use Docker
+This repo contain a lua container for you to pack the plugin yourself. 
+Follow the below step:
+
+Start the container:
+```
+docker compose up -d
+```
+
+Pack the plugin using the container:
+```
+docker exec -it [CONTAINER_NAME] luarocks make kong-jwt2header-1.0-1.rockspec
+docker exec -it [CONTAINER_NAME] luarocks pack kong-jwt2header 1.0-1
+
+docker cp [CONTAINER_NAME]:/tmp/volume/kong-jwt2header-1.0-1.all.rock kong-jwt2header-1.0-1.all.rock
+```
+You will have the packed plugin file `kong-jwt2header-1.0-1.all.rock`
 
 ### luarocks
 
@@ -34,13 +41,21 @@ $ luarocks install kong-plugin-jwt2header-1.0-1.all.rock
 
 Once installed, besure to include `kong-jwt2header` in your KONG_PLUGINS environment variable and reload Kong. 
 
+## Using the plugin
+```
+curl -X POST http://localhost:8001/services/{serviceName|Id}/plugins \
+    --data "name=kong-jwt2header"  \
+    --data "config.claims=sub,aud"
+```
+After added the plugin, new headers with prefix `X-Kong-JWT-Claim-` will be added.
+ie. `X-Kong-JWT-Claim-sub` and `X-Kong-JWT-Claim-aud`
 
 ## Configuration
 
 Since this plugin has elements that must run in the Rewrite execution phase, this plugin can only be configured to run globally in a kong workspace or cluster.
 
 
-| Parameter     | Default     | Description                                                              |  Required  |
-| ------------- |-------------|--------------------------------------------------------------------------|-------------| 
-| claims |  | The claims that you want to add to header                                | yes
+| Parameter | Default | Description                                                | Required |
+|-----------|---------|------------------------------------------------------------|----------| 
+| claims    |         | The claims that you want to add to header, comma separated | yes      |
 

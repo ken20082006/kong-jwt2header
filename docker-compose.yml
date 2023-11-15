@@ -3,6 +3,7 @@ services:
   my-luarocks-container:
     image: imolein/luarocks:5.4
     command: tail -f /dev/null
+    working_dir: /tmp/volume
     volumes:
       - ./plugin:/tmp/volume/plugin
       - ./kong-jwt2header-1.0-1.rockspec:/tmp/volume/kong-jwt2header-1.0-1.rockspec
